@@ -10,8 +10,8 @@ import (
 )
 
 // AddRule func adds rules into stream
-func AddRule(tag string, value string, key string, endpoint string) error {
-	url := ""
+func AddRule(tag string, value string, key string) error {
+	url := "https://streaming.vk.com/rules/?key="+key
 
 	client := http.Client{}
 

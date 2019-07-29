@@ -9,8 +9,8 @@ import (
 )
 
 // DeleteRule delete rule from stream
-func DeleteRule(tag string, value string, key string, endpoint string) error {
-	url := ""
+func DeleteRule(tag string, value string, key string) error {
+	url := "https://streaming.vk.com/rules/?key="+key
 
 	tag = fmt.Sprintf(`{"tag":"%s"}`, tag+"./."+value)
 
