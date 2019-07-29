@@ -1,4 +1,4 @@
-package VkStreamApi
+package vkstreamapi
 
 import (
 	"encoding/json"
@@ -13,7 +13,7 @@ func GetAccesToken() {
 		log.Fatal("firehose api authorization failed:", err)
 	}
 	bodyBuf, err := ioutil.ReadAll(resp.Body)
-	var v vkAPIResponse
+	var v VkAPIResponse
 
 	if err := json.Unmarshal(bodyBuf, &v); err != nil {
 		log.Fatal("unmarshal response json failed:", err)

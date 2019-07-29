@@ -1,4 +1,4 @@
-package VkStreamApi
+package vkstreamapi
 
 import (
 	"fmt"
@@ -7,7 +7,8 @@ import (
 	"net/http"
 )
 
-func GetRules(key string) error {
+// GetRules func returns rules from stream
+func GetRules(tag string, value string, key string, endpoint string) error {
 	url := fmt.Sprintf("")
 
 	req, err := http.NewRequest("GET", url, nil)

@@ -1,6 +1,7 @@
-package VkStreamApi
+package vkstreamapi
 
-type vkAPIResponse struct {
+// VkAPIResponse struct
+type VkAPIResponse struct {
 	Response struct {
 		Endpoint string `json:"endpoint"`
 		Key      string `json:"key"`

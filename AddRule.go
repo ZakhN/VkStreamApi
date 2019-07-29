@@ -1,14 +1,16 @@
-package VkStreamApi
+package vkstreamapi
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
-func AddRule(tag string, value string) error {
+// AddRule func adds rules into stream
+func AddRule(tag string, value string, key string, endpoint string) error {
 	url := ""
 
 	client := http.Client{}
@@ -39,6 +41,8 @@ func AddRule(tag string, value string) error {
 	if err != nil {
 		return fmt.Errorf("error: ", err)
 	}
+
+	log.Println(string(body))
 
 	return nil
 }

@@ -1,4 +1,4 @@
-package VkStreamApi
+package vkstreamapi
 
 import (
 	"bytes"
@@ -8,10 +8,11 @@ import (
 	"net/http"
 )
 
+// DeleteRule delete rule from stream
 func DeleteRule(tag string, value string, key string, endpoint string) error {
 	url := ""
 
-	tag := fmt.Sprintf(`{"tag":"%s"}`, tag+"./."+value)
+	tag = fmt.Sprintf(`{"tag":"%s"}`, tag+"./."+value)
 
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer([]byte(tag)))
 	if err != nil {
@@ -23,13 +24,12 @@ func DeleteRule(tag string, value string, key string, endpoint string) error {
 	client := http.Client{}
 
 	resp, err := client.Do(req)
-	bodyBuf, err := ioutil.ReadAll(resp.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("error: ", err)
 	}
 
-	log.Println(tag, "***RULES DELETED***")
-	log.Println(string(bodyBuf))
+	log.Println(string(body))
 
 	return nil
 }
