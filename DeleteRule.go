@@ -29,6 +29,10 @@ func DeleteRule(tag string, value string, key string) error {
 		return fmt.Errorf("error: ", err)
 	}
 
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("error: ", clientResp.Body)
+	}
+
 	log.Println(string(body))
 
 	return nil

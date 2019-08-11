@@ -20,6 +20,10 @@ func GetRules(tag string, value string, key string, endpoint string) error {
 		return fmt.Errorf("error: ", err)
 	}
 
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("error: ", clientResp.Body)
+	}
+
 	defer resp.Body.Close()
 
 	bodyBuf, err := ioutil.ReadAll(resp.Body)

@@ -32,12 +32,15 @@ func AddRule(tag string, value string, key string) error {
 
 	req.Header.Set("Content-Type", "application/json")
 
-	clientResp, err := client.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return fmt.Errorf("error: ", err)
 	}
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("error: ", resp.Body)
+	}
 
-	body, err := ioutil.ReadAll(clientResp.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("error: ", err)
 	}
