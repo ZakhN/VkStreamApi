@@ -9,7 +9,7 @@ import (
 
 // GetRules func returns rules from stream
 func GetRules(tag string, value string, key string, endpoint string) error {
-	url := fmt.Sprintf("")
+	url := "https://streaming.vk.com/rules/?key=" + key
 
 	req, err := http.NewRequest("GET", url, nil)
 
