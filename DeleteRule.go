@@ -12,7 +12,7 @@ import (
 func DeleteRule(tag string, value string, key string) error {
 	url := "https://streaming.vk.com/rules/?key="+key
 
-	tag = fmt.Sprintf(`{"tag":"%s"}`, tag+"./."+value)
+	tag = fmt.Sprintf(`{"tag":"%s"}`, tag+"-=-"+value)
 
 	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer([]byte(tag)))
 	if err != nil {
