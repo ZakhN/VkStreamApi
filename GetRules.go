@@ -16,15 +16,15 @@ func GetRules(tag string, value string, key string, endpoint string) error {
 	client := &http.Client{}
 
 	resp, err := client.Do(req)
+	defer resp.Body.Close()
 	if err != nil {
 		return fmt.Errorf("error: ", err)
 	}
 
 	if resp.StatusCode != 200 {
-		return fmt.Errorf("error: ", clientResp.Body)
+		return fmt.Errorf("error: ", resp.Body)
 	}
 
-	defer resp.Body.Close()
 
 	bodyBuf, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

@@ -33,6 +33,8 @@ func AddRule(tag string, value string, key string) error {
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := client.Do(req)
+	defer resp.Body.Close()
+	
 	if err != nil {
 		return fmt.Errorf("error: ", err)
 	}

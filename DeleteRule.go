@@ -24,13 +24,15 @@ func DeleteRule(tag string, value string, key string) error {
 	client := http.Client{}
 
 	resp, err := client.Do(req)
+	defer resp.Body.Close()
+	
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("error: ", err)
 	}
 
 	if resp.StatusCode != 200 {
-		return fmt.Errorf("error: ", clientResp.Body)
+		return fmt.Errorf("error: ", resp.Body)
 	}
 
 	log.Println(string(body))
