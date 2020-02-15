@@ -5,49 +5,46 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
 // AddRule func adds rules into stream
-func AddRule(tag string, value string, key string) error {
-	url := "https://streaming.vk.com/rules/?key=" + key
-
-	client := http.Client{}
-
-	var values Rules
-
-	values.Rule.Value = value
-	values.Rule.Tag = tag + "-=-" + value
+func AddRule(tag, value, url string) ([]byte, error) {
+	values := Rules{
+		Rule: Rule{
+			Value: value,
+			Tag:   tag,
+		},
+	}
 
 	encodedRules, err := json.Marshal(values)
 	if err != nil {
-		return fmt.Errorf("error: ", err)
+		return nil, fmt.Errorf("error: %v", err)
 	}
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(encodedRules))
+	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(encodedRules))
 	if err != nil {
-		return fmt.Errorf("error: ", err)
+		return nil, fmt.Errorf("error: %v", err)
 	}
 
 	req.Header.Set("Content-Type", "application/json")
 
+	client := http.Client{}
 	resp, err := client.Do(req)
 	defer resp.Body.Close()
-	
+
 	if err != nil {
-		return fmt.Errorf("error: ", err)
+		return nil, fmt.Errorf("error: %v", err)
 	}
+
 	if resp.StatusCode != 200 {
-		return fmt.Errorf("error: ", resp.Body)
+		return nil, fmt.Errorf("error: %v", resp.Body)
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return fmt.Errorf("error: ", err)
+		return nil, fmt.Errorf("error: %v", err)
 	}
 
-	log.Println(string(body))
-
-	return nil
+	return body, nil
 }

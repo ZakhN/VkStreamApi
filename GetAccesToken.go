@@ -3,20 +3,24 @@ package vkstreamapi
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
-func GetAccesToken() {
-	resp, err := http.Get("")
+func GetAccessToken(url string) (*VkAPIResponse, error) {
+	resp, err := http.Get(url)
 	if err != nil {
-		log.Fatal("firehose api authorization failed:", err)
+		return nil, err
 	}
-	bodyBuf, err := ioutil.ReadAll(resp.Body)
-	var v VkAPIResponse
 
-	if err := json.Unmarshal(bodyBuf, &v); err != nil {
-		log.Fatal("unmarshal response json failed:", err)
+	bodyBuf, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
 	}
-	log.Println("host:", v.Response.Endpoint, "key:", v.Response.Key)
+
+	var response VkAPIResponse
+
+	if err := json.Unmarshal(bodyBuf, &response); err != nil {
+		return nil, err
+	}
+	return &response, nil
 }

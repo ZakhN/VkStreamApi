@@ -3,35 +3,29 @@ package vkstreamapi
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
 // GetRules func returns rules from stream
-func GetRules(tag string, value string, key string, endpoint string) error {
-	url := "https://streaming.vk.com/rules/?key=" + key
-
-	req, err := http.NewRequest("GET", url, nil)
+func GetRules(key, url string) ([]byte, error) {
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 
 	client := &http.Client{}
 
 	resp, err := client.Do(req)
 	defer resp.Body.Close()
 	if err != nil {
-		return fmt.Errorf("error: ", err)
+		return nil, fmt.Errorf("error: %v", err)
 	}
 
 	if resp.StatusCode != 200 {
-		return fmt.Errorf("error: ", resp.Body)
+		return nil, fmt.Errorf("error: %v", resp.Body)
 	}
-
 
 	bodyBuf, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return fmt.Errorf("error: ", err)
+		return nil, fmt.Errorf("error: %v", err)
 	}
 
-	log.Println(string(bodyBuf))
-
-	return nil
+	return bodyBuf, nil
 }
